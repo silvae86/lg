@@ -28,7 +28,7 @@ const int LG_IFACE = 1;
 // The maximum (absolute) brightness value we'll set.
 static const uint16_t MAX_BRIGHTNESS = 0xd2f0;
 // We won't allow the brightness to go below this.
-static const uint16_t MIN_PERCENT = 1;
+static const uint16_t MIN_PERCENT = 10;
 // The amount (in %) we dim / brighten per adjustment
 static const uint8_t BRIGHTNESS_STEP = 2;
 
@@ -278,8 +278,10 @@ int main(int argc, char *argv[]) {
   } else if (argc != 2) {
     adjust(lgdevs);
   } else {
-    adjustOnce(lgdevs, *argv[1]);
+      printf("Found %d LG monitors.", lg_cnt);
+      for (int i = 0; i < lg_cnt; ++i) {
+          adjustOnce(&lgdevs[i], *argv[1]);
+      }
   }
-
   return 0;
 }
