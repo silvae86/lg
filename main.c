@@ -139,10 +139,12 @@ libusb_device_handle *init(libusb_device **lgdevs) {
 int handleChar(libusb_device_handle *lg_handle, char ch) {
   switch (ch) {
   case '+':
+  case 'u':
   case '=':
     // Brighten
     return adjustBrightnessPercent(lg_handle, BRIGHTNESS_STEP);
   case '-':
+  case 'd':
   case '_':
     // Dim
     return adjustBrightnessPercent(lg_handle, -BRIGHTNESS_STEP);
@@ -235,14 +237,14 @@ int getLGUltrafineUsbDevices(libusb_device **devs, int usb_cnt, libusb_device **
 
 void printHelp() {
   printf("\n");
-  printf("  lg +     brighten the screen\n");
-  printf("  lg -     dim the screen\n");
+  printf("  lg + or u    brighten the screen\n");
+  printf("  lg - or d     dim the screen\n");
   printf("  lg       interactive mode for adjusting brightness\n");
   printf("\n");
 }
 
 int main(int argc, char *argv[]) {
-  if (argc == 2 && *argv[1] != '+' && *argv[1] != '-') {
+  if (argc == 2 && *argv[1] != '+' && *argv[1] != '-' && *argv[1] != 'u' && *argv[1] != 'd') {
     printHelp();
     return 1;
   }
